@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kdt.mapper.studySchedule">
+    <select id="getStudyScheduleByCohortSn" parameterType="com.kdt.KDT_PJT.cmmn.map.CmmnMap" resultType="com.kdt.KDT_PJT.studySchedule.dto.StudyScheduleResponseDTO">
+        /*
+            필요한 파라미터 cohortSn, roleType, userSn,
+            UNION ALL 할 경우 파라미터를 맞게 넣었는데도 부족하게 넣었다고하는 에러가 생길수있음 따라서 select * from (내부 select문) as A 이런식으로 별칭 매기는게 좋음
+        */
+
+        SELECT * FROM (
+        SELECT
+        i.ITV_SN as scheduleSn,
+        '면담 요청' as boardType,
+        i.ITV_APLY_TTL as title,
+        i.ITV_APLY_DT as regDt,
+        u.USER_NM as userNm,
+        i.VIEW_CNT as viewCnt
+        FROM TB_INTERVIEW i
+        LEFT JOIN TB_USER u ON u.USER_SN = i.ITV_APLCNT_SN
+        WHERE i.DEL_YN = 0
+        AND i.COHORT_SN = #{cohortSn}
+        AND i.ITV_CFMTN_DT IS NULL
+        <if test="roleType == 2 or roleType == 3">
+            AND i.ITV_PIC_AUTHRT = #{roleType}
+        </if>
+
+        <if test="roleType == 4">
+            AND (i.ITV_PIC_SN = #{userSn} OR i.ITV_APLCNT_SN = #{userSn})
+        </if>
+
+        <if test="roleType == 5">
+            AND i.ITV_APLCNT_SN = #{userSn}
+        </if>
+        ORDER BY i.ITV_SN DESC
+        LIMIT 50
+        ) AS a
+
+<!--        UNION ALL-->
+
+<!--        SELECT * FROM (-->
+<!--        SELECT-->
+<!--        i.ITV_SN as scheduleSn,-->
+<!--        '면담 확정' as boardType,-->
+<!--        i.ITV_APLY_TTL as title,-->
+<!--        i.ITV_APLY_DT as regDt,-->
+<!--        u.USER_NM as userNm,-->
+<!--        i.VIEW_CNT as viewCnt-->
+<!--        FROM TB_INTERVIEW i-->
+<!--        LEFT JOIN TB_USER u ON u.USER_SN = i.ITV_APLCNT_SN-->
+<!--        WHERE i.DEL_YN = 0-->
+<!--        AND i.COHORT_SN = #{cohortSn}-->
+<!--        AND i.ITV_CFMTN_DT IS NOT NULL-->
+<!--        <if test="roleType != 1">-->
+<!--            AND i.ITV_PIC_AUTHRT = #{roleType}-->
+<!--            AND i.ITV_PIC_SN = #{userSn}-->
+<!--        </if>-->
+<!--        ORDER BY i.ITV_SN DESC-->
+<!--        LIMIT 50-->
+<!--        ) AS b-->
+
+        UNION ALL
+
+        SELECT * FROM (
+        SELECT
+        ir.ITV_RECORD_SN as scheduleSn,
+        '면담 기록' as boardType,
+        ir.ITV_RECORD_TTL as title,
+        ir.REG_DT as regDt,
+        u.USER_NM as userNm,
+        ir.VIEW_CNT as viewCnt
+        FROM TB_INTERVIEW_RECORD ir
+        LEFT JOIN TB_USER u ON ir.ITV_PIC_SN = u.USER_SN
+        WHERE ir.DEL_YN = 0
+        AND ir.COHORT_SN = #{cohortSn}
+        <if test="roleType != 1">
+            AND (ir.ITV_PIC_SN = #{userSn} OR ir.ITV_TRPR_SN = #{userSn})
+        </if>
+        ORDER BY ir.ITV_RECORD_SN DESC
+        LIMIT 50
+        ) AS c
+
+        UNION ALL
+
+        SELECT * FROM (
+            SELECT
+                c.CAL_SN as scheduleSn,
+                CASE c.PRVT_YN
+                    WHEN 1 THEN '개인일정'
+                    WHEN 0 THEN '공식일정'
+                END AS boardType,
+                c.EVENT_NM as title,
+                c.EVENT_REG_DT as regDt,
+                u.USER_NM as userNm,
+                c.VIEW_CNT as viewCnt
+            FROM TB_CALENDAR c
+            LEFT JOIN TB_USER u ON u.USER_SN = c.USER_SN
+            WHERE 1=1
+            AND c.DEL_YN = 0
+            <if test="roleType == 1 or roleType == 2 or roleType == 3"> -- 슈퍼어드민, 대표, 직원은 기수 공식일정만 조회
+                AND c.PRVT_YN = 0 AND c.COHORT_SN = #{cohortSn}
+            </if>
+            <if test="roleType == 4 or roleType == 5">                  -- 강사, 학생은 공식, 개인일정 조회
+                AND ((c.PRVT_YN = 1 AND c.USER_SN = #{userSn})
+                    OR
+                     (c.PRVT_YN = 0 AND c.COHORT_SN = #{cohortSn})
+                    )
+            </if>
+        ) AS d
+
+        ORDER BY regDt DESC
+        LIMIT 50
+
+    </select>
+
+
+</mapper>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kdt.KDT_PJT.response.mapper.SrvyResponseDetailMapper">
+
+    <!-- 단건조회 -->
+<!--    <select id="findSurveyDetailWithResponse"-->
+<!--            resultType="com.kdt.KDT_PJT.response.dto.SrvyResponseDetailDto">-->
+<!--        SELECT-->
+<!--            S.SRVY_SN   AS surveySn,   &#45;&#45; 설문 SN-->
+<!--            S.SRVY_TTL  AS title,      &#45;&#45; 설문 제목-->
+<!--            R.RSPSN_CN  AS response    &#45;&#45; 응답 JSON (질문 포함)-->
+<!--        FROM TB_BBS_SURVEY S-->
+<!--                 LEFT JOIN TB_RESPONSE R-->
+<!--                           ON S.SRVY_SN = R.PARENT_SN-->
+<!--                               AND R.USER_SN = #{userSn}-->
+<!--                               AND R.DEL_YN = FALSE-->
+<!--        WHERE S.SRVY_SN = #{srvySn}-->
+<!--          AND S.SRVY_DEL_YN = FALSE-->
+<!--            LIMIT 1-->
+<!--    </select>-->
+    <select id="findSurveyDetailWithResponse"
+            resultType="com.kdt.KDT_PJT.response.dto.SrvyResponseDetailDto">
+        SELECT
+        S.SRVY_SN  AS surveySn,
+        S.SRVY_TTL AS title,
+        R.RSPNS_CN AS response
+        FROM TB_BBS_SURVEY S
+        LEFT JOIN TB_RESPONSE R
+        ON S.SRVY_SN = R.PARENT_SN
+        AND R.USER_SN = #{userSn}
+        AND R.DEL_YN  = FALSE   <!-- CHAR('Y'/'N')면 'N'으로 -->
+        WHERE S.SRVY_SN = #{srvySn}
+        AND S.DEL_YN  = FALSE  <!-- 여기 교체 -->
+        LIMIT 1
+    </select>
+
+    <!--작성자용 전체 응답 조회-->
+<!--    <select id="findAllResponsesBySurvey"-->
+<!--            resultType="com.kdt.KDT_PJT.response.dto.SrvyResponseDetailDto">-->
+<!--        SELECT-->
+<!--            R.USER_SN   AS userSn,-->
+<!--            U.USER_NM   AS userName,-->
+<!--            R.RSPSN_CN  AS response-->
+<!--        FROM TB_RESPONSE R-->
+<!--                 JOIN TB_USER U ON R.USER_SN = U.USER_SN-->
+<!--        WHERE R.PARENT_SN = #{srvySn}-->
+<!--          AND R.DEL_YN = FALSE-->
+<!--        ORDER BY R.RSPNS_SN ASC-->
+
+<!--    </select>-->
+    <select id="findAllResponsesBySurvey"
+            resultType="com.kdt.KDT_PJT.response.dto.SrvyResponseDetailDto">
+        SELECT
+        R.USER_SN   AS userSn,
+        U.USER_NM   AS userName,
+        R.RSPNS_CN  AS response   <!-- ★ RSPSN_CN -> RSPNS_CN -->
+        FROM TB_RESPONSE R
+        JOIN TB_USER U ON R.USER_SN = U.USER_SN
+        WHERE R.PARENT_SN = #{srvySn}
+        AND R.DEL_YN = FALSE      <!-- CHAR('Y'/'N')면 AND R.DEL_YN = 'N' -->
+        ORDER BY R.RSPNS_SN ASC
+    </select>
+
+</mapper>

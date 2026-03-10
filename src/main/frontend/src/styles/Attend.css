@@ -1,0 +1,258 @@
+/* -------------------------
+   뱃지 스타일
+------------------------- */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 70px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+/* 상태별 색상 */
+.badge--PRESENT {
+    background: #e8f5e9;
+    color: #1b5e20;
+}
+
+.badge--LATE {
+    background: #fff8e1;
+    color: #e65100;
+}
+
+.badge--EARLY_LEAVE {
+    background: #e3f2fd;
+    color: #0d47a1;
+}
+
+.badge--ABSENT {
+    background: #ffebee;
+    color: #b71c1c;
+}
+
+.badge--PRESENT_PENDING {
+    background: #f0f0f0;
+    color: #1b5e20;
+}
+
+.badge--LATE_PENDING {
+    background: #fff3cd;
+    color: #e65100;
+}
+
+/* -------------------------
+   테이블 스타일
+------------------------- */
+.table-body td {
+    text-align: center;
+    padding: 6px 0;
+    font-size: 14px;
+}
+
+/* -------------------------
+   단위기간 별 출석 현황 카드(학생 마이페이지용)
+------------------------- */
+.att-card {
+    width: 100%;
+    /* background: #fff; */
+    background: var(--color-sec-bg);
+    border: 1px solid #e6e6e6;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    padding: 20px;
+    width: 570px;
+}
+
+.att-card__head {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.att-card__title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    /* color: #222; */
+    color: var(--color-text-main);
+}
+
+.att-card__period {
+    font-size: 13px;
+    color: #777;
+    border: none;
+    padding-bottom: 2.5px;
+}
+
+.att-card__divider {
+    border: 0.5px solid #222;
+    margin: 0px;
+}
+
+.att-card__stats {
+    display: flex;
+    justify-content: space-around;
+    /* 균등 간격 */
+    align-items: flex-start;
+    gap: 40px;
+    /* 널찍하게 */
+}
+
+.att-stat {
+    flex: 1;
+    text-align: center;
+}
+
+.att-stat__label {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.att-stat__value {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+/* 색상 톤 */
+.att--present {
+    /* color: #1d78ff; */
+    color: var(--color-primary);
+    /* 파란색 */
+}
+
+.att--leoe {
+    /* color: #f6a38a; */
+    color: var(--color-accent-light);
+    /* 살구색 */
+}
+
+.att--absent {
+    /* color: #ff7a45; */
+    color: var(--color-accent);
+    /* 주황 */
+}
+
+/* 금일 모든 기수 출결 조회 용 */
+.coh-card {
+    max-width: 720px;
+    height: 200px;
+    margin: 24px auto;
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .06);
+    padding: 24px 28px;
+}
+
+/* 헤더 */
+.coh-card__head {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    margin: 6px 0 8px;
+}
+
+.coh-card__title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 800;
+    color: #222
+}
+
+.coh-card__period {
+    font-size: 13px;
+    color: #666
+}
+
+.coh-card__divider {
+    border-top: 2px solid var(--font-color-gray1);
+    margin: 4px 0 18px 0
+}
+
+/* 그리드(기수 나열) */
+.coh-grid {
+    display: grid;
+    column-gap: 56px;
+    align-items: end;
+    /* 숫자 기준선 통일 */
+    text-align: center;
+}
+
+/* 아이템 */
+.coh-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center
+}
+
+.coh-item__label {
+    min-height: 28px;
+    /* 라벨 높이 고정 → 흔들림 방지 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: #555
+}
+
+.coh-item__value {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1;
+    color: #222
+}
+
+/* 반응형(선택) */
+@media (max-width:900px) {
+    .coh-card {
+        max-width: 720px
+    }
+
+    .coh-grid {
+        column-gap: 24px
+    }
+
+    .coh-item__value {
+        font-size: 40px
+    }
+}
+
+.att-card,
+.attend-request-card {
+    position: relative;
+    z-index: 10;
+}
+
+.att-card {
+    /* 20px → 줄임 */
+}
+
+.att-stat__value {
+    font-size: 36px;
+    /* 56px → 줄임 */
+}
+
+.att-stat__label {
+    font-size: 14px;
+    /* 16px → 줄임 */
+}
+
+.listTable{
+    display: grid;
+    grid-template-columns: 0.5fr 1.5fr 2fr 2fr 1fr;
+    width: 100%;
+}
+
+.listTable div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,0 +1,215 @@
+/* 전역 CSS / index.js에서 호출해서 전역으로 적용 */
+@import "./token.css";
+
+
+.layoutFrame {
+  width: 100%;
+  max-width: 1760px;
+  height: 100vh;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas: 
+    "header"
+    "main"
+  ;
+}
+
+
+.layoutFrame > .header {
+  margin-top: 16px;
+  height: 64px;
+  width: 100%;
+  padding: 0 24px;
+  grid-area: header;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  border-radius: 32px;
+  background-color: var(--color-main-bg);
+  box-shadow: 0 2px 0 rgba(0,0,0,0.08);
+  position: sticky;
+  z-index: 2000;
+  top: 16px;
+  /* border-bottom: 1px solid var(--font-color-gray3); */
+}
+
+/* 사이드 */
+.layoutFrame > .aside {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1fr auto;
+  gap: 16px;
+  position: fixed;
+  left: 0;
+  top: 96px;
+  
+  z-index: 99;
+
+  width: 280px;
+  height: calc(100dvh - 176px);
+  
+  border-radius: 0 12px 12px 0;
+  background: rgba(0,0,0,0.06);
+  backdrop-filter: blur(6px);
+  
+  overflow: hidden;
+  
+  cursor: pointer;
+  
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.layoutFrame.isClosed > .aside {
+  min-width: 0px;
+  border: 1px solid rgba(0,0,0,0.06);
+  transform: translateX(-260px);
+}
+
+.layoutFrame.isClosed > .aside:hover {
+  transform: translate(-240px);
+  background: rgba(0,0,0,0.1);
+  cursor:grabbing;
+}
+
+.layoutFrame.isClosed > .aside > * {
+  display: none;
+}
+
+/* 본문 */
+.layoutFrame > .main {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 12px 0 12px;
+  overflow-y: auto;
+  gap: 16px;
+}
+
+/* 스크롤 영역 블러 마스크 */
+.fade-blur-top {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 64px;
+
+  pointer-events: none;
+
+  /* backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px); */
+
+  mask-image: linear-gradient(
+    to top,
+    transparent,
+    black 40%
+  );
+
+  background: linear-gradient(
+    to top,
+    rgba(255,255,255,0),
+    rgba(255,255,255,0.85)
+  );
+}
+
+.fade-blur-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  z-index: 1000;
+  pointer-events: none;
+
+  /* backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px); */
+
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 40%
+  );
+
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0),
+    rgba(255,255,255,0.85)
+  );
+}
+
+
+
+@media (max-width: 1760px){
+  .layoutFrame {
+    max-width: 1440px;
+    margin: 0 auto;
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+      "header"
+      "main"
+    ;
+
+    transition: grid-template-columns 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .layoutFrame > .aside {
+    width: 240px;
+  }
+  
+  .layoutFrame.isClosed > .aside {
+    overflow: hidden;
+    transform: translateX(-220px);
+  }
+
+  .layoutFrame.isClosed > .aside:hover {
+    transform: translateX(-204px);
+    background: rgba(0,0,0,0.1);
+  }
+
+}
+
+
+/* 대시보드 푸터 정렬용 */
+.dashboard-container {
+  width: 100%;
+  /* display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto; */
+  /* padding-bottom: 16px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+}
+
+/* 스크롤바 숨기기 */
+.main::-webkit-scrollbar {
+  display: none;
+}
+.dashboard-content {
+  width: 100%;
+  min-height: calc(100dvh - 176px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 0.5fr;
+  grid-template-rows:
+    minmax(0, auto) /* main (대시보드 콘텐츠) */
+    1fr    /* spacer (여백 존) */
+    ;  /* footer */
+  margin-top: 16px;
+  gap: 24px;
+}
+.dashboard-content-std {
+  width: 100%;
+  min-height: calc(100dvh - 176px);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows:
+    auto   /* header */
+    minmax(0, auto) /* main (대시보드 콘텐츠) */
+    1fr    /* spacer (여백 존) */
+    auto;  /* footer */
+  margin-top: 16px;
+  gap: 24px;
+}

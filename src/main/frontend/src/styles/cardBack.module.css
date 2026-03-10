@@ -1,0 +1,133 @@
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 12px;
+}
+
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 4px;
+}
+
+.liContainer{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: var(--color-sec-bg);
+  flex-direction: column;
+  border-radius: 8px;
+}
+
+.detailInfo {
+  display: none;
+}
+
+.absoluteLi{
+  width: 100%;
+  height: 48px;
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: 1.5fr 5fr 1.4fr;
+  background-color: var(--color-main-bg);
+}
+
+.absoluteLi:hover {
+  box-shadow: 0px 4px 4px var(--shadow-color);
+}
+
+.detailOpen {
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.detailOpen .absoluteLi {
+  box-shadow: 0px 4px 4px var(--shadow-color2);
+}
+
+.can {
+  height: 52px;
+}
+
+.detailWrapper {
+  padding: 4px;
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detailOpen .detailInfo {
+  display: flex;
+  align-items: center;
+}
+
+
+.sttsCellOn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  color: var(--font-color-blue1);
+}
+
+.sttsCellOff {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  color: var(--font-color-red1);
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+.crclmCell{
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  justify-content: baseline;
+  text-overflow: ellipsis;
+}
+
+.applyBtnOn{
+  padding: 4px 8px;
+  border-radius: 8px;
+  color: var(--font-color-white);
+  background-color: var(--bg-color-blue1);
+  font-size: 1rem;
+}
+
+.applyBtnOn:hover {
+  background-color: var(--bg-color-blue2);
+  
+}
+.applyBtnOn:active {
+  background-color: var(--bg-color-blue3);
+  font-size: 0.9rem;
+}
+
+.applyBtnOff{
+  font-size: 1rem;
+  background-color: var(--bg-color-gray2);
+  padding: 4px 8px;
+  border-radius: 8px;
+  color: var(--font-color-white);
+}
+
+.labelInfo {
+  padding: 0 4px;
+  border-radius: 8px;
+  border: none;
+  background-color: var(--bg-color-blue2);
+  color: var(--font-color-white);
+  margin-right: 4px;
+  font-size: 1rem;
+}

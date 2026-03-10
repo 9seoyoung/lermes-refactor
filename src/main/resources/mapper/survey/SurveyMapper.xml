@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kdt.KDT_PJT.survey.mapper.SurveyMapper">
+    <!-- 설문 등록 -->
+    <insert id="insertSurvey" useGeneratedKeys="true" keyProperty="dto.srvySn">
+        INSERT INTO TB_BBS_SURVEY
+        (
+        SRVY_TTL,
+        SRVY_QITEM,
+        CO_SN,
+        COHORT_SN,
+        SRVY_BGNG_DT,
+        SRVY_END_DT,
+        SRVY_SCOPE,
+        BBS_TYPE,
+        USER_SN,
+        SRVY_FRST_WRT_DT,
+        FORM_UUID
+        )
+        VALUES
+        (
+        #{dto.srvyTtl},
+        CAST(#{dto.srvyQitem, jdbcType=OTHER} AS JSON),
+        #{dto.coSn},
+        #{dto.cohortSn},
+        #{dto.srvyBgngDt},
+        #{dto.srvyEndDt},
+        #{dto.srvyScope},
+        COALESCE(#{dto.bbsType}, 'SURVEY'),
+        #{dto.userSn},
+        NOW(),
+        #{uuid}
+        )
+    </insert>
+
+    <!-- 단건 조회 -->
+    <select id="findSurveyById" resultType="com.kdt.KDT_PJT.survey.dto.ResponseSurveyDto">
+        SELECT
+        S.SRVY_SN          AS srvySn,
+        S.SRVY_TTL         AS srvyTtl,
+        S.SRVY_QITEM       AS srvyQitem,
+        S.CO_SN            AS coSn,
+        S.COHORT_SN        AS cohortSn,
+        S.USER_SN          AS userSn,
+        U.USER_NM          AS userNm,
+        S.SRVY_BGNG_DT     AS srvyBgngDt,
+        S.SRVY_END_DT      AS srvyEndDt,
+        S.SRVY_SCOPE       AS srvyScope,
+        S.BBS_TYPE         AS bbsType,
+        S.FORM_UUID        AS formUuid,
+        S.VIEW_CNT         AS viewCnt,
+        S.DEL_YN      AS delYn,
+        S.SRVY_FRST_WRT_DT AS srvyFrstWrtDt,
+        S.SRVY_LAST_MDFCN_DT AS srvyLastMdfcnDt
+        FROM TB_BBS_SURVEY S
+        JOIN TB_USER U ON S.USER_SN = U.USER_SN
+        WHERE S.SRVY_SN = #{srvySn}
+        AND S.DEL_YN = FALSE
+    </select>
+
+    <!-- 단건조회시 조회수 증가 -->
+    <update id="increaseViewCnt">
+        UPDATE TB_BBS_SURVEY
+        SET VIEW_CNT = VIEW_CNT + 1
+        WHERE SRVY_SN = #{srvySn}
+    </update>
+
+    <!-- 목록 조회 -->
+    <select id="findSurveyListFiltered" resultType="com.kdt.KDT_PJT.survey.dto.ResponseSurveyDto">
+        SELECT
+        s.SRVY_SN              AS srvySn,
+        s.SRVY_TTL             AS srvyTtl,
+        s.SRVY_QITEM           AS srvyQitem,
+        s.SRVY_BGNG_DT         AS srvyBgngDt,
+        s.SRVY_END_DT          AS srvyEndDt,
+        s.SRVY_SCOPE           AS srvyScope,
+        s.BBS_TYPE             AS bbsType,
+        s.CO_SN                AS coSn,
+        s.COHORT_SN            AS cohortSn,
+        s.USER_SN              AS userSn,
+        u.USER_NM              AS userNm,
+        s.FORM_UUID            AS formUuid,
+        s.VIEW_CNT             AS viewCnt,
+        s.SRVY_FRST_WRT_DT     AS srvyFrstWrtDt,
+        s.SRVY_LAST_MDFCN_DT   AS srvyLastMdfcnDt,
+        s.DEL_YN               AS delYn
+        FROM TB_BBS_SURVEY s
+        JOIN TB_USER u ON s.USER_SN = u.USER_SN
+        WHERE s.DEL_YN = FALSE
+        <if test="bbsType != null">
+            AND s.BBS_TYPE = #{bbsType}
+        </if>
+        <if test="coSn != null">
+            AND s.CO_SN = #{coSn}
+        </if>
+        <if test="cohortSn != null">
+            AND (s.COHORT_SN = #{cohortSn} OR s.COHORT_SN IS NULL)
+        </if>
+
+        <!-- ✅ 권한별 스코프 필터 -->
+        <if test="allowedScopes != null and allowedScopes.size() > 0">
+            AND s.SRVY_SCOPE IN
+            <foreach item="scope" collection="allowedScopes" open="(" separator="," close=")">
+                #{scope}
+            </foreach>
+        </if>
+
+        ORDER BY s.SRVY_SN DESC
+    </select>
+
+    <!--응답 테이블 작성자 비교-->
+    <select id="findWriterBySurveySn" resultType="map">
+        SELECT
+            USER_SN   AS writerSn,
+            COHORT_SN AS cohortSn,
+            SRVY_SCOPE AS srvyScope
+        FROM TB_BBS_SURVEY
+        WHERE SRVY_SN = #{srvySn}
+          AND DEL_YN = FALSE
+            LIMIT 1
+    </select>
+
+
+
+    <!-- 수정 (작성자용) -->
+    <update id="updateSurveyOwner">
+        UPDATE TB_BBS_SURVEY
+        SET
+        SRVY_TTL     = #{dto.srvyTtl},
+        SRVY_QITEM   = #{dto.srvyQitem},
+        CO_SN        = #{dto.coSn},
+        COHORT_SN    = #{dto.cohortSn},
+        SRVY_BGNG_DT = #{dto.srvyBgngDt},
+        SRVY_END_DT  = #{dto.srvyEndDt},
+        SRVY_SCOPE   = #{dto.srvyScope},
+        BBS_TYPE     = #{dto.bbsType},
+        SRVY_LAST_MDFCN_DT = NOW()
+        WHERE SRVY_SN = #{srvySn}
+        AND USER_SN = #{dto.userSn}
+    </update>
+
+    <!-- 수정 (관리자용: 작성자 제약 없음) -->
+    <update id="updateSurveyByAdmin">
+        UPDATE TB_BBS_SURVEY
+        SET
+        SRVY_TTL     = #{dto.srvyTtl},
+        SRVY_QITEM   = #{dto.srvyQitem},
+        CO_SN        = #{dto.coSn},
+        COHORT_SN    = #{dto.cohortSn},
+        SRVY_BGNG_DT = #{dto.srvyBgngDt},
+        SRVY_END_DT  = #{dto.srvyEndDt},
+        SRVY_SCOPE   = #{dto.srvyScope},
+        BBS_TYPE     = #{dto.bbsType},
+        SRVY_LAST_MDFCN_DT = NOW()
+        WHERE SRVY_SN = #{srvySn}
+    </update>
+
+    <!-- 삭제 (작성자만) -->
+    <update id="softDeleteSurvey">
+        UPDATE TB_BBS_SURVEY
+        SET DEL_YN = TRUE,
+        SRVY_LAST_MDFCN_DT = NOW()
+        WHERE SRVY_SN = #{srvySn}
+        AND USER_SN = #{userSn}
+    </update>
+
+    <!-- 삭제 (관리자/강사) -->
+    <update id="softDeleteSurveyByAdmin">
+        UPDATE TB_BBS_SURVEY
+        SET DEL_YN = TRUE,
+        SRVY_LAST_MDFCN_DT = NOW()
+        WHERE SRVY_SN = #{srvySn}
+    </update>
+
+</mapper>

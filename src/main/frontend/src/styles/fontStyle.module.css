@@ -1,0 +1,14 @@
+.detailsRed {
+    color: var(--font-color-red1);
+    margin: 0 4px;
+}
+
+.detailsGray {
+    margin: 0 4px;
+    color: var(--font-color-gray2);
+}
+
+.detailsBlue {
+    margin: 0 4px;
+    color: var(--font-color-blue1);
+}

@@ -1,0 +1,117 @@
+.myInfoSection {
+    border-radius: 12px;
+    padding: 0px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* 제목 영역 */
+.myInfoTitle {
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+
+/* 폼 본문 */
+.myInfoForm {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+/* 행 (라벨 + 인풋) */
+.myInfoRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* 라벨 */
+.myInfoLabel {
+    font-weight: 600;
+    /* color: #333; */
+    color: var(--color-text-sec);
+    min-width: 80px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    padding: 4px 8px;
+    text-align: right;
+    font-size: 13px;
+}
+
+/* 인풋 */
+.myInfoInput {
+    flex: 1;
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    /* color: #333; */
+    color: var(--color-text-sec);
+    min-width: 150px;
+}
+
+/* 버튼 기본 스타일 */
+.myInfoButton {
+    margin-left: 5px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #000;
+    background: #000;
+    /* color: #fff; */
+    color: var(--color-text-primary);
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.myInfoButton:hover:not(:disabled) {
+    background: #333;
+}
+
+.myInfoButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* 주소 검색 버튼 */
+.myInfoAddressButton {
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: #000;
+    /* color: #fff; */
+    color: var(--color-text-primary);
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.myInfoAddressButton:hover:not(:disabled) {
+    background: #333;
+}
+
+/* 저장 버튼은 항상 하단 오른쪽 */
+.myInfoActions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0;
+    position: relative;
+    top: -310px;
+    /* 위로 올리기 */
+    right: -350px;
+    /* 오른쪽 이동 */
+}
+
+.myDetailInfoInput {
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    /* color: #333; */
+    color: var(--color-text-sec);
+    min-width: 150px;
+}

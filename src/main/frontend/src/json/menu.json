@@ -1,0 +1,78 @@
+{
+    "pagetop": {
+        "main": { "label": "메인", "parent": null},
+
+        "notice": { "label": "공지사항", "parent": "공지" },
+
+        "cusorder": {"label": "주문 신청", "parent": "고객 메뉴"},
+        "orderHistory": {"label": "주문 내역", "parent": "고객 메뉴"},
+
+        "stockCheck": { "label": "재고 조회", "parent": "재고 관리"},
+
+        "shipmentRegister": {"label": "출고 등록", "parent": "수요 관리"},
+        "orderSheet": {"label": "수주 내역", "parent": "수요 관리"},
+        "demandForecast": {"label": "수요 예측 데이터", "parent": "수요 관리"},
+
+        "receiptRegister": {"label": "입고 등록", "parent": "발주 관리"},
+        "purchaseRequest": {"label": "발주 신청", "parent": "발주 관리"},
+        "purchaseHistory": {"label": "발주 내역", "parent": "발주 관리"},
+
+        "clientManagement": {"label": "거래처 관리", "parent": "관리자 설정"},
+        "partnerManagement": {"label": "협력사 관리", "parent": "관리자 설정"},
+        "materialManagement": {"label": "재료 관리", "parent": "관리자 설정"},
+        "productManagement": {"label": "상품 관리", "parent": "관리자 설정"}
+    },
+
+    "user": {
+        "login": "로그인",
+        "logout": "로그아웃"
+    },
+
+    "page": {
+        "main": {
+
+        },
+        "notice": {
+
+        },
+        "cusorder": {
+
+        },
+        "orderHistory": {
+
+        },
+        "stockCheck": {
+
+        },
+        "shipmentRegister": {
+
+        },
+        "orderSheet": {
+
+        },
+        "demandForecast": {
+
+        },
+        "receiptRegister": {
+
+        },
+        "purchaseRequest": {
+
+        },
+        "purchaseHistory": {
+
+        },
+        "clientManagement": {
+
+        },
+        "partnerManagement": {
+
+        },
+        "materialManagement": {
+
+        },
+        "productManagement": {
+
+        }
+    }
+}

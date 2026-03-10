@@ -1,0 +1,22 @@
+.edit {
+  width: 40px;
+  height: 20px;
+  border-radius: 4px;
+  /* background-color: #D9D9D9; */
+  background-color: var(--color-main-bg);
+  font-size: 12px;
+}
+
+.edit:hover {
+  /* background-color: #ACACAC;
+  color: #fff; */
+  background-color: var(--color-secondary-bg);
+  color: var(--color-text-primary);
+}
+
+.edit:focus {
+  /* background-color: #D9D9D9;
+  color: #000; */
+  background-color: var(--color-main-bg);
+  color: var(--color-text-main);
+}

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kdt.mapper.interviewRecord">
+    <insert id="createInterviewRecord" parameterType="com.kdt.KDT_PJT.interview.dto.InterviewRecordRequestDTO" useGeneratedKeys="true" keyProperty="itvRecordSn">
+        INSERT INTO
+            TB_INTERVIEW_RECORD
+            (
+                ITV_SN,
+                ITV_RECORD_TTL,
+                ITV_RECORD_CN,
+                FORM_UUID,
+                ITV_PIC_SN,
+                ITV_TRPR_SN,
+                COHORT_SN,
+                CO_SN,
+                ITV_DT
+            )
+        VALUES
+              (
+               #{itvSn},
+               #{itvRecordTtl},
+               #{itvRecordCn},
+               #{formUuid},
+               #{itvPicSn},
+               #{itvTrprSn},
+               #{cohortSn},
+               #{coSn},
+               #{itvDt}
+                 )
+    </insert>
+
+
+    <select id="countActiveRecordByItvSn" parameterType="Integer" resultType="Integer">
+        /*
+        QueryID : com.kdt.mapper.interviewRecord.countActiveRecordByItvSn
+        Description : 특정 ITV_SN에 대해 활성(DEL_YN=0)된 기록 개수 조회
+        */
+        SELECT
+            COUNT(*)
+        FROM TB_INTERVIEW_RECORD
+        WHERE ITV_SN = #{itvSn}
+          AND DEL_YN = 0
+    </select>
+
+    <select id="readInterviewRecordByUserSnAndCohortSn" parameterType="com.kdt.KDT_PJT.cmmn.map.CmmnMap" resultType="com.kdt.KDT_PJT.interview.dto.InterviewRecordListResponseDTO">
+        SELECT
+            i.ITV_RECORD_SN,
+            i.ITV_SN,
+            i.ITV_RECORD_TTL,
+            u1.USER_NM as itvPicNm,
+            i.ITV_PIC_SN,
+            i.VIEW_CNT,
+            i.REG_DT,
+            '면담기록' as postType
+        FROM TB_INTERVIEW_RECORD i
+        LEFT JOIN TB_USER u1 ON u1.USER_SN = i.ITV_PIC_SN
+        LEFT JOIN TB_USER u2 ON u2.USER_SN = i.ITV_TRPR_SN
+        WHERE 1=1
+        AND DEL_YN = 0
+        AND COHORT_SN = #{cohortSn} -- 해당 기수 것만 조회
+        AND (                       -- 자기 것만 조회
+            i.ITV_PIC_SN = #{userSn}
+            OR
+            i.ITV_TRPR_SN = #{userSn}
+            )
+        ORDER BY ITV_RECORD_SN DESC -- 최신순
+        LIMIT 100
+    </select>
+
+    <select id="readInterviewRecordDetailByItvRecordSn" parameterType="Integer" resultType="com.kdt.KDT_PJT.interview.dto.InterviewRecordDetailResponseDTO">
+        SELECT
+            i.ITV_RECORD_SN,
+            i.ITV_SN,
+            i.ITV_RECORD_TTL,
+            i.ITV_RECORD_CN,
+            i.FORM_UUID,
+            u1.USER_NM as itvPicNm,     -- 면담 담당자 이름
+            u2.USER_NM as itvTrprNm,    -- 면담 대상자 이름
+            i.ITV_DT,
+            i.COHORT_SN,
+            i.VIEW_CNT,
+            i.REG_DT
+        FROM TB_INTERVIEW_RECORD i
+        LEFT JOIN TB_USER u1 ON u1.USER_SN = i.ITV_PIC_SN
+        LEFT JOIN TB_USER u2 ON u2.USER_SN = i.ITV_TRPR_SN
+        WHERE 1=1
+        AND DEL_YN = 0
+        AND ITV_RECORD_SN = #{itvRecordSn}
+        ORDER BY ITV_RECORD_SN DESC -- 최신순
+        LIMIT 100
+
+    </select>
+
+    <update id="incViewCnt" parameterType="Integer">
+        UPDATE TB_INTERVIEW_RECORD
+        SET VIEW_CNT = VIEW_CNT + 1
+        WHERE ITV_RECORD_SN = #{itvRecordSn}
+          AND DEL_YN = 0
+    </update>
+
+    <update id="deleteInterviewRecordByItvRecordSn">
+        UPDATE TB_INTERVIEW_RECORD
+        SET DEL_YN = 1
+        WHERE ITV_RECORD_SN = #{itvRecordSn}
+          AND DEL_YN = 0
+    </update>
+
+    <update id="updateInterviewRecordByItvRecordSn" parameterType="com.kdt.KDT_PJT.interview.dto.InterviewRecordRequestDTO">
+        UPDATE TB_INTERVIEW_RECORD
+        <set> -- 마지막쉼표 자동제거
+            <if test="itvSn != null">
+                ITV_SN = #{itvSn},
+            </if>
+
+            <if test="itvDt != null">
+                ITV_DT = #{itvDt},
+            </if>
+
+            <if test="itvRecordTtl != null and itvRecordTtl != ''">
+                ITV_RECORD_TTL = #{itvRecordTtl},
+            </if>
+
+            <if test="itvRecordCn != null and itvRecordCn !=''">
+                ITV_RECORD_CN = #{itvRecordCn},
+            </if>
+
+            <if test="formUuid != null and formUuid !=''">
+                FORM_UUID = #{formUuid},
+            </if>
+
+            <if test="itvPicSn != null">
+                ITV_PIC_SN = #{itvPicSn},
+            </if>
+
+            <if test="itvTrprSn != null">
+                ITV_TRPR_SN = #{itvTrprSn},
+            </if>
+        </set>
+        WHERE ITV_RECORD_SN = #{itvRecordSn}
+        AND DEL_YN = 0
+    </update>
+</mapper>

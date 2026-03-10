@@ -1,0 +1,92 @@
+.fixedBox {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 12px;
+  background-color: var(--bg-color-gray3);
+  position: fixed;
+  right: 0;
+}
+
+.explainBox {
+  display: flex;
+  flex-direction: column;
+  padding: 0 12px;
+  gap: 16px;
+}
+
+.applyBtn {
+  background-color: var(--bg-color-blue2);
+  color: var(--font-color-white);
+  height: 40px;
+  width: 300px;
+  border-radius: 40px;
+}
+
+.backBtn {
+  background-color: var(--bg-color-gray2);
+  color: var(--font-color-white);
+  height: 40px;
+  width: 300px;
+  border-radius: 40px;
+}
+
+.applyBtn:hover {
+  background-color: var(--bg-color-blue1);
+}
+
+.applyBtn:active {
+  background-color: var(--bg-color-blue3);
+}
+
+.backBtn:hover {
+  background-color: var(--bg-color-gray1);
+}
+
+.backBtn:active {
+  background-color: var(--bg-color-gray3);
+}
+
+.can {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.selected {
+  position: relative;
+  color: var(--font-color-white);
+  font-weight: 800;
+}
+
+.selected::after {
+  content: "";
+  display: inline-block;    
+  position: absolute;
+  left: 5px;
+  top: 4px;
+  width: 20px;               
+  height: 20px;
+  background: var(--color-accent);         
+  border-radius: 50%;     
+  opacity: var(--opacity-25);   
+}
+
+.redBtn {
+  color: var(--bg-color-red1);
+  border-radius: 4px;
+  height: min-content;
+  padding: 2px 4px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  gap: 4px;
+}
+
+.redBtn:hover,
+.redBtn:focus,
+.redBtn:active {
+  outline: none;
+  color: var(--bg-color-red2);
+}

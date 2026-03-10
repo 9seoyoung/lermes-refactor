@@ -1,0 +1,169 @@
+hr {
+  border: none;
+  /* 기본 border 없애기 */
+  border-top: 1px solid #000;
+  /* 위쪽에 실선 1px 넣기 */
+  height: 0;
+  /* 높이는 0으로 */
+  margin: 0px 10px;
+  width: 430px;
+}
+
+body {
+  background-color: var(--color-main-bg);
+  /* background-color: #d9d9d9; */
+  /* overflow: hidden; */
+}
+
+/* 전체 영역 */
+.section {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  height: 100vh;
+  gap: 100px;
+}
+
+/* 왼쪽 영역 */
+.left_section {
+  width: 80%;
+  height: 90%;
+  background-color: #dac9c9;
+  padding: 30px;
+  box-sizing: border-box;
+  margin-left: 30px;
+  margin-right: 100px;
+}
+
+/* 안내 문구 */
+.subText {
+  margin-top: 200px;
+  margin-left: 10px;
+  font-size: 20px;
+}
+
+/* 회원가입 폼 */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: fit-content;
+}
+
+.signUpText {
+  display: flex;
+  justify-content: center;
+  font-size: 32px;
+}
+
+.input {
+  width: 420px;
+  height: 48px;
+  border-radius: 48px;
+  border: 2px solid #bfbfbf;
+  font-size: 16px;
+  padding-left: 20px;
+}
+
+.input:focus {
+  border: 2px solid #0088ff;
+  outline: none;
+}
+
+.input::placeholder {
+  color: #bfbfbf;
+}
+
+.emailWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 시작하기 버튼 */
+.startBtn {
+  width: 96px;
+  height: 48px;
+  border-radius: 48px;
+  background-color: #6155f5;
+  font-size: 14px;
+  /* color: #fff; */
+  color: var(--color-text-primary);
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+/* 인증 버튼 */
+.verifyBtn {
+  width: 96px;
+  height: 48px;
+  border-radius: 48px;
+  /* background-color: #0088ff;
+  color: #fff; */
+  background-color: var(--color-primary);
+  color: var(--color-text-primary);
+  font-size: 16px;
+}
+
+/* 회원가입 버튼 */
+.signUpBtn {
+  width: 450px;
+  height: 48px;
+  border-radius: 48px;
+  /* background-color: #0088ff;
+  color: #fff; */
+  background-color: var(--color-primary);
+  color: var(--color-text-primary);
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+/* 로고 부분 */
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  padding: 10px;
+  height: 76px
+}
+
+/* 로고 이미지 */
+.logoImg {
+  width: 180px;
+  height: 60px;
+  /* background-color: #fff; */
+  background-color: var(--color-sec-bg);
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #bfbfbf;
+  font-size: 1.4rem;
+  /* color: #565656; */
+  color: var(--color-text-nav);
+  object-fit: contain;
+}
+
+.logoImg:hover {
+  /* color: #fff;
+  background: #ACACAC; */
+  color: var(--color-text-primary);
+  background: var(--color-secondary-bg);
+}
+
+/* 이미지 설명 */
+.imgCaption {
+  padding-left: 10px;
+  font-size: 1rem;
+  color: #00000050;
+  position: absolute;
+  right: -76px;
+  bottom: 12px;
+}
+
+/* .beforeImgAddition {
+  
+} */

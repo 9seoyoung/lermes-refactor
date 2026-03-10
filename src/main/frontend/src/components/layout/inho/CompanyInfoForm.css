@@ -1,0 +1,153 @@
+.companyInfoSection {
+    background: #f9f9f9;
+    border-radius: 12px;
+    padding: 0px;
+    margin: 0 auto;
+    width: 500px;
+}
+
+.companyLogoSelectBtn {
+    background-color: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    padding: 5px;
+    padding-right: 205px;
+}
+
+.companyInfoSection.companyInfoSectionB {
+    height: auto;
+}
+
+/* 제목 영역 */
+.companyInfoTitle {
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0px;
+}
+
+/* 폼 본문 */
+.companyInfoForm {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+/* 행 (라벨 + 인풋) */
+.companyInfoRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* 라벨 */
+.companyInfoLabel {
+    flex: 0 0 100px;
+    text-align: right;
+    font-weight: 600;
+    color: #555;
+    background: #f5f5f5;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 14px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    /* ← 가운데 정렬 */
+    line-height: 1.4;
+    /* 줄 간격 조금 띄워주기 */
+    white-space: normal;
+    /* ← 줄바꿈 허용 */
+    word-break: keep-all;
+    /* ← 단어 중간 끊김 방지 */
+}
+
+
+/* 인풋 */
+.companyDetailInfoInput {
+    flex: 1;
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #333;
+    min-width: 150px;
+}
+
+/* 버튼 기본 스타일 */
+.companyInfoButton {
+    margin-left: 5px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #000;
+    background: #000;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+
+.companyInfoButton:hover:not(:disabled) {
+    background: #333;
+}
+
+.companyInfoButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* 버튼 기본 스타일 */
+.companyInfoButtonA {
+    margin-left: 5px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #000;
+    background: #000;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+    transform: translateY(-10px);
+}
+
+
+.companyInfoButtonA:hover:not(:disabled) {
+    background: #333;
+}
+
+.companyInfoButtonA:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+
+
+/* 주소 검색 버튼 */
+.companyInfoAddressButton {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #000;
+    background: #000;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.companyInfoAddressButton:hover:not(:disabled) {
+    background: #333;
+}
+
+/* 저장 버튼은 항상 하단 오른쪽 */
+.companyInfoActions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0;
+    position: relative;
+    top: -320px;
+    /* 위로 올리기 */
+}

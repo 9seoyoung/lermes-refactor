@@ -1,0 +1,138 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4); /* 반투명 검정 배경 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9998;
+}
+
+.container {
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 400px;
+  background-color: var(--color-sec-bg);
+  border-radius: 16px;
+  transition: height 0.3s ease;
+  overflow: hidden;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999; /* 다른 요소 위에 뜨게 */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.schedTitle {
+  border: none;
+  padding: 0 5px;
+}
+
+.schedTitle:focus {
+  border: 1px solid #000;
+}
+
+.popUpBtn {
+  display: flex;
+  gap: 5px;
+}
+
+.memo {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.optionsToggle {
+  margin-top: 10px;
+  user-select: none;
+  cursor: pointer;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+}
+
+.arrow {
+  display: inline-block;
+  margin-left: 5px;
+  margin-right: 5px;
+
+  transition: transform 0.3s ease;
+  /* 기본 화살표 아래 방향 */
+  border: none;
+}
+
+.arrowOpen {
+  transform: rotate(180deg); /* 화살표 위 방향 */
+}
+
+.optionsContent {
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px;
+  width: 100%;
+}
+
+
+/* 시간 설정 */
+.timeInput {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+}
+
+.timeInput  input{
+  width: 105px;
+}
+
+.private { 
+  display: flex;
+  justify-content: end;
+  gap: 4px;
+  font-weight: normal;
+}
+
+.optionHeader {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.grayBtn {
+  background-color: var(--bg-color-gray3);
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.grayBtn:hover {
+  background-color: var(--bg-color-gray2);
+  color: var(--font-color-white);
+}
+
+.redBtn {
+  background-color: var(--bg-color-red1);
+  color: var(--font-color-white);
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.redBtn:hover {
+  background-color: var(--bg-color-red2);
+  color: var(--font-color-white);
+}

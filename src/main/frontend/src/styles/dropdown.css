@@ -1,0 +1,86 @@
+.dd {
+  position: relative;
+  display: inline-block;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+}
+
+.dd__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .6rem .9rem;
+  border-radius: .6rem;
+  /* border: 1px solid #d0d5dd; */
+  width: 100%;
+  font-size: 1.2rem;
+  /* background: #fff; */
+  background: var(--color-sec-bg);
+  cursor: pointer;
+}
+.dd__button:hover { background: #f8fafc; }
+.dd__button:disabled { opacity: .6; cursor: not-allowed; }
+
+.dd__chev { transition: transform .2s ease; }
+.dd__chev.is-open { transform: rotate(180deg); }
+
+/* 메뉴 컨테이너 */
+.dd__menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  width: 100%;
+  min-width: max-content;
+  /* background: #f6f6f6; */
+  background: var(--color-light-bg);
+  border: 1px solid #e5e7eb;
+  border-radius: .6rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+  overflow: hidden;
+  /* 스르륵 내려오는 효과 */
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+
+  z-index: 999;
+  
+  transition:
+    max-height .26s ease,
+    opacity .18s ease,
+    transform .26s ease;
+}
+
+.dd__menu--start { left: 0; }
+.dd__menu--end   { right: 0; }
+
+.dd__menu.is-open {
+  max-height: 320px; /* 내용보다 크면 자동으로 보임 */
+  opacity: 1;
+  transform: translateY(0);
+  padding: 4px 4px;
+  pointer-events: auto;
+  width: 100%;
+}
+
+/* 항목 스타일 */
+.dd__item {
+  width: 100%;
+  text-align: left;
+  padding: .7rem .9rem;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  font-size: 1.6rem;
+}
+.dd__menu p:hover {
+  background: #00000025;
+  cursor: pointer;
+}
+
+/* 모션 최소화 환경 */
+@media (prefers-reduced-motion: reduce) {
+  .dd__menu {
+    transition: none;
+    transform: none;
+  }
+}

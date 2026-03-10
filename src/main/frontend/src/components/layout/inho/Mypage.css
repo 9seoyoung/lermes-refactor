@@ -1,0 +1,188 @@
+.my-page-div {
+    background: #f9f9f9;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    width: 1140px;
+    position: relative;
+}
+
+
+.my-page-div section {
+    margin: 0;
+    padding: 5px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-sizing: border-box;
+}
+
+
+.my-page-header {
+    padding: 2.5px;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.std-my-page-second {
+    position: absolute;
+    top: 0px;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.admin-my-page-second {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 42px;
+    right: 100px;
+    z-index: 10;
+    flex: none;
+}
+
+/* ==================== UserProfile ======================== */
+
+/* src/styles/MyInfo.css */
+
+.myInfoSection {
+    padding: 0;
+    width: 100%;
+    margin: 0 auto;
+    border: none;
+    border-radius: 0;
+}
+
+.myInfoTitle {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.myInfoEditBtn {
+    font-size: 12px;
+    margin-left: 5px;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 10px;
+    cursor: pointer;
+}
+
+.blue {
+    background: var(--bg-color-blue1);
+    color: var(--font-color-white);
+}
+.gray {
+    background: var(--bg-color-gray2);
+    color: var(--font-color-white);
+}
+
+.myInfoEditBtn.blue:hover {
+    background: var(--bg-color-blue2);
+}
+
+.myInfoEditBtn.gray:hover {
+    background: var(--bg-color-gray3);
+}
+
+.myInfoDivider {
+    margin: 10px 0;
+    border: none;
+    border-top: 1px solid #ccc;
+}
+
+.myInfoContent {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+#userInfoCont{
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+
+.myInfoPhoto {
+    width: 120px;
+    height: 150px;
+    background: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #555;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.myInfoDetails {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16.5px;
+}
+
+.myInfoRow {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.myInfoLabel {
+    flex: 0 0 100px;
+    text-align: right;
+    font-weight: 600;
+    color: #555;
+    background: #f5f5f5;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 14px;
+    border: none;
+}
+
+.myInfoValue,
+.myInfoInput {
+    text-align: right;
+    font-weight: 600;
+    color: #555;
+    border-bottom: none;
+}
+
+.myInfoInput {
+    font-size: 14px;
+    padding: 4px 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+
+    flex: 0 0 auto;
+    width: 200px;
+    /* 고정폭 */
+    max-width: 150px;
+}
+
+.deleteBtn {
+    margin-top: 6px;
+    font-size: 12px;
+    background: #f44336;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 2px 8px;
+    cursor: pointer;
+}
+
+.myInfoActions {
+    /* 위쪽 여백 */
+    display: flex;
+    justify-content: flex-start;
+}
+
+.myInfoTitleA {
+    border-bottom: 1px solid #D9D9D9;
+    margin-top: 10px;
+}

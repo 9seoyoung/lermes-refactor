@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kdt.mapper.certifi">
+    <insert id="createCertifiTemplate" parameterType="com.kdt.KDT_PJT.cerfifi.dto.CertifiTemplateRequestDTO" useGeneratedKeys="true" keyProperty="certifiSn">
+        INSERT INTO TB_CERTIFI_TYPE
+        (
+            CERTIFI_TYPE_NM, CO_SN, CERTIFI_TTL_NM, BODY_CN, TMPLT_FILE_SN
+        ) VALUES (
+            #{certifiTypeNm}, #{coSn}, #{certifiTtlNm}, #{bodyCn}, #{tmpltFileSn}
+                 )
+    </insert>
+</mapper>

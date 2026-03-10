@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kdt.mapper.interview">
+    <insert id="insertApplyInterview" parameterType="com.kdt.KDT_PJT.cmmn.map.CmmnMap" useGeneratedKeys="true" keyProperty="itvSn">
+        /*
+          QueryID : com.kdt.mapper.interview.insertApplyInterview
+          Description : 클라이언트의 면담 요청을 받아 TB_INTERVIEW에 insert
+          작성자 : 김동식
+          */
+        INSERT INTO TB_INTERVIEW (
+            ITV_APLCNT_SN,
+            ITV_APLY_TTL, ITV_APLY_CN, COHORT_SN, FORM_UUID, ITV_PIC_AUTHRT, ITV_APLY_DT, CO_SN
+        ) VALUES (
+                     #{itvAplcntSn},
+                     #{title}, #{content}, #{cohortSn}, #{formUuid}, #{itvPicAuthrt}, #{itvAplyDt}, #{coSn}
+                 )
+    </insert>
+
+    <select id="getMyInterviewRequests" parameterType="com.kdt.KDT_PJT.cmmn.map.CmmnMap" resultType="com.kdt.KDT_PJT.cmmn.map.CmmnMap">
+        /*
+        QueryID : com.kdt.mapper.interview.getMyInterviewRequests
+        Description : 배정되지 않은 면담을 보여준다. (가장 오래된 신청부터)
+        Rule:
+        - 대표(2): ITV_PIC_AUTHRT = 2
+        - 직원(3): ITV_PIC_AUTHRT = 3
+        - 강사(4): ITV_PIC_AUTHRT = 4
+        - 공통: COHORT_SN = cohortSn  -> 여기 샵 괄호 이런거 쓰면 에러뜸 사용 ㄴㄴ
+        */
+        SELECT
+        i.ITV_SN            AS itvSn,
+        i.COHORT_SN         AS cohortSn,
+        i.ITV_APLY_TTL      AS itvAplyTtl,
+        i.ITV_APLY_CN       AS itvAplyCn,
+        i.ITV_APLY_DT       AS itvAplyDt,
+        i.ITV_PIC_AUTHRT    AS itvPicAutht,
+        i.ITV_PIC_SN        AS itvPicSn,
+        i.ITV_APLCNT_SN     AS itvAplcntSn,
+        i.ITV_PRNMNT_DT     AS itvPrnmntDt,
+        i.ITV_PLC           AS itvPlc,
+        i.PIC_CAL_SN        AS picCalSn,
+        i.APLCNT_CAL_SN     AS aplcntCalSn
+        FROM TB_INTERVIEW i
+        WHERE 1=1
+            AND i.COHORT_SN = #{cohortSn}
+            AND i.ITV_PIC_AUTHRT = #{roleType}
+            AND i.ITV_PRNMNT_DT IS NULL -- 이거 값 있으면 면담 배정 끝난거임
+            AND i.DEL_YN = 0
+        <!-- 방어적으로 roleType 허용 범위 체크를 SQL로도 하고 싶다면 아래 주석 해제
+        AND #{roleType} IN (2,3,4)
+        -->
+        ORDER BY i.ITV_APLY_DT ASC
+    </select>
+
+    <select id="getMyInterviewRequestsAll" parameterType="com.kdt.KDT_PJT.cmmn.map.CmmnMap" resultType="com.kdt.KDT_PJT.cmmn.map.CmmnMap">
+        /*
+        QueryID : com.kdt.mapper.interview.getMyInterviewRequests
+        Description : 회사내 모든 기수의 배정되지 않은 면담을 보여준다. (가장 오래된 신청부터)
+        Author: 구서영
+        Rule:
+        - 대표(2): ITV_PIC_AUTHRT = 2
+        - 직원(3): ITV_PIC_AUTHRT = 3
+        - 강사(4): ITV_PIC_AUTHRT = 4
+        - 공통: COHORT_SN = cohortSn  -> 여기 샵 괄호 이런거 쓰면 에러뜸 사용 ㄴㄴ
+        */
+        SELECT
+            i.ITV_SN            AS itvSn,
+            i.COHORT_SN         AS cohortSn,
+            i.ITV_APLY_TTL      AS itvAplyTtl,
+            i.ITV_APLY_CN       AS itvAplyCn,
+            i.ITV_CFMTN_DT      as itvCfmtnDt,
+            i.ITV_APLY_DT       AS itvAplyDt,
+            i.ITV_PIC_AUTHRT    AS itvPicAutht,
+            i.ITV_PIC_SN        AS itvPicSn,
+            i.ITV_APLCNT_SN     AS itvAplcntSn,
+            i.ITV_PRNMNT_DT     AS itvPrnmntDt,
+            u1.USER_NM          AS itvAplcntNm, -- 신청자 명
+            u2.USER_NM          AS itvPicNm,    -- 담당자 명
+            i.ITV_PLC           AS itvPlc,
+            i.PIC_CAL_SN        AS picCalSn,
+            i.APLCNT_CAL_SN     AS aplcntCalSn,
+            i.VIEW_CNT          AS viewCnt,      -- 조회수
+            CASE
+                WHEN i.ITV_PRNMNT_DT IS NULL THEN '면담신청'
+                ELSE '면담확정'
+            END AS postType
+        FROM TB_INTERVIEW i
+        JOIN TB_COHORT c
+            ON c.COHORT_SN = i.COHORT_SN
+        JOIN TB_USER u1      ON u1.USER_SN = i.ITV_APLCNT_SN    -- 이름 매칭용
+        LEFT JOIN TB_USER u2 ON u2.USER_SN = i.ITV_PIC_SN       -- 이름 매칭용
+        WHERE 1=1
+            <if test="roleType != null and roleType != 1">
+                AND c.CO_SN = #{coSn}               <!-- 회사는 항상 제한 -->
+            </if>
+            AND i.DEL_YN = 0
+            <if test="cohortSn != null and cohortSn != 0">
+            AND i.COHORT_SN = #{cohortSn}     <!-- 특정 기수만 보고 싶을 때 -->
+            </if>
+            <!-- 신청자 본인 요청 보기 -->
+            <if test="userSn != null and userSn != 0">
+                AND i.ITV_APLCNT_SN = #{userSn}
+            </if>
+
+            <!-- 담당자 권한별 보기 (신청자 조건 없을 때만) -->
+            <if test="(userSn == null or userSn == 0) and roleType != null and roleType != 1">
+                AND i.ITV_PIC_AUTHRT = #{roleType}
+                AND i.ITV_PRNMNT_DT IS NULL
+            </if>
+        ORDER BY i.ITV_APLY_DT ASC
+        </select>
+
+    <update id="incViewCnt" parameterType="com.kdt.KDT_PJT.cmmn.map.CmmnMap">
+        UPDATE TB_INTERVIEW
+            SET VIEW_CNT = VIEW_CNT + 1
+        WHERE ITV_SN = #{itvSn}
+          AND DEL_YN = 0
+    </update>
+
+    <update id="confirmInterview" parameterType="com.kdt.KDT_PJT.cmmn.map.CmmnMap" >
+        /*
+        QueryID : com.kdt.mapper.interview.confirmInterview
+        Description : 면담 확정 (기존 컬럼 수정)
+        작성자 : 김동식
+        */
+        UPDATE TB_INTERVIEW i
+        SET
+            i.ITV_PRNMNT_DT = #{itvPrnmntDt},
+            i.ITV_PLC       = #{itvPlc},
+            i.ITV_PIC_SN    = #{itvPicSn},
+            i.ITV_CFMTN_DT  = NOW(),
+            i.ITV_PIC_ANS   = #{itvPicAns}
+        WHERE i.ITV_SN = #{itvSn}
+          AND i.ITV_PIC_SN IS NULL
+          AND i.DEL_YN = 0
+    </update>
+
+    <select id="selectInterviewParticipants" parameterType="com.kdt.KDT_PJT.cmmn.map.CmmnMap" resultType="com.kdt.KDT_PJT.cmmn.map.CmmnMap">
+        /*
+        QueryID : com.kdt.mapper.interview.selectInterviewParticipants
+        Description : itvSn으로 ITV_PIC_SN, ITV_APLCNT_SN 조회
+        작성자 : 김동식
+        */
+        SELECT ITV_PIC_SN, ITV_APLCNT_SN
+        FROM TB_INTERVIEW
+        WHERE ITV_SN = #{itvSn}
+          AND DEL_YN = 0
+    </select>
+
+    <update id="updateInterviewCalSn" parameterType="com.kdt.KDT_PJT.cmmn.map.CmmnMap" >
+        /*
+        QueryID : com.kdt.mapper.interview.confirmInterview
+        Description : 면담 확정 (기존 컬럼 수정)
+        작성자 : 김동식
+        */
+        UPDATE TB_INTERVIEW i
+        SET
+            i.ITV_PRNMNT_DT = #{itvPrnmntDt},
+            i.ITV_PLC       = #{itvPlc},
+            i.ITV_PIC_SN    = #{itvPicSn},
+            i.ITV_CFMTN_DT  = NOW(),
+            i.ITV_PIC_ANS   = #{itvPicAns}
+        WHERE i.ITV_SN = #{itvSn}
+          AND i.ITV_PIC_SN IS NULL
+          AND i.DEL_YN = 0
+    </update>
+
+    <update id="insertCalendarSnToInterview" parameterType="com.kdt.KDT_PJT.cmmn.map.CmmnMap" >
+        /*
+        QueryID : com.kdt.mapper.interview.updateCalendarSn
+        Description : 캘린더 일정 2명 만들어지면 만들어진 일정 번호 각각 집어넣음.
+        작성자 : 김동식
+        */
+        UPDATE TB_INTERVIEW i
+        SET
+            i.PIC_CAL_SN    = #{picCalSn},
+            i.APLCNT_CAL_SN = #{aplcntCalSn}
+        WHERE 1=1
+          AND i.ITV_SN = #{itvSn}
+          AND i.PIC_CAL_SN IS NULL
+          AND i.APLCNT_CAL_SN IS NULL
+    </update>
+
+    <select id="getCoSnAndCohortSnByItvSn" parameterType="com.kdt.KDT_PJT.cmmn.map.CmmnMap" resultType="com.kdt.KDT_PJT.cmmn.map.CmmnMap">
+        /*
+        QueryID : com.kdt.mapper.interview.getCoSnAndCohortSnByItvSn
+        Description : 해당 면담 글에 조회 가능한지 체크하기위해 itvSn으로 coSn,cohortSn 조회
+        작성자 : 김동식
+        */
+        SELECT
+            CO_SN as coSn,
+            COHORT_SN as cohortSn
+        FROM TB_INTERVIEW
+        WHERE ITV_SN = #{itvSn}
+          AND DEL_YN = 0
+    </select>
+
+    <select id="readInterviewbyItvSn" parameterType="com.kdt.KDT_PJT.cmmn.map.CmmnMap" resultType="com.kdt.KDT_PJT.cmmn.map.CmmnMap">
+        /*
+        QueryID : com.kdt.mapper.interview.readInterviewbyItvSn
+        Description : itvSn으로 글 상세보기. TB_USER이랑 조인해서 이름 리턴해줌
+        작성자 : 김동식
+        */
+        SELECT
+            i.ITV_SN            AS itvSn,
+            i.CO_SN             AS coSn,
+            i.COHORT_SN         AS cohortSn,
+            i.ITV_APLY_TTL      AS itvAplyTtl,
+            i.ITV_APLY_CN       AS itvAplyCn,
+            i.ITV_APLY_DT       AS itvAplyDt,
+            i.ITV_PIC_AUTHRT    AS itvPicAutht,
+            i.VIEW_CNT          AS viewCnt,
+            u.USER_NM           AS itvAplcntNm,
+            u2.USER_NM          AS itvAplcntSn,
+            i.FORM_UUID         AS formUuid,
+            i.ITV_PRNMNT_DT     AS itvPrnmntDt,   -- 확정일시
+            i.ITV_PLC           AS itvPlc,        -- 면담장소
+            i.ITV_PIC_ANS       AS itvPicAns      -- 담당자 코멘트
+
+          --  i.ITV_APLCNT_SN     AS itvAplcntSn -- 작성자
+        FROM TB_INTERVIEW i
+        JOIN
+            TB_USER u ON i.ITV_APLCNT_SN = u.USER_SN
+        LEFT JOIN TB_USER u2 ON u2.USER_SN = i.ITV_PIC_SN
+--         LEFT JOIN TB_FILE f ON i.FORM_UUID = f.FORM_UUID
+        WHERE
+            i.ITV_SN = #{itvSn}
+        AND i.DEL_YN = 0
+    </select>
+
+    <update id="deleteInterviewApplyBeforeConfirm" parameterType="Integer">
+    /*
+    soft delete (확정 전에만 삭제 가능)
+    */
+        UPDATE TB_INTERVIEW
+        SET DEL_YN = 1
+        WHERE 1=1
+            AND ITV_SN = #{itvSn}
+            AND DEL_YN = 0          -- 삭제 안된 글만 삭제 가능
+            AND ITV_CFMTN_DT IS NULL -- 확정이면 이거 채워져있기때문에 확정이면 삭제 불가능.
+    </update>
+
+    <select id="getItvPrnmntDtByItvSn" parameterType="Integer" resultType="java.time.LocalDateTime">
+        SELECT
+            ITV_PRNMNT_DT
+        FROM TB_INTERVIEW
+        WHERE 1=1
+        AND ITV_SN = #{itvSn}
+    </select>
+
+
+</mapper>

@@ -1,0 +1,20 @@
+#boxCol {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: var(--color-sec-bg);
+  flex-direction: column;
+  padding: 20px 12px;
+  border-radius: 16px;
+  flex: 1;
+  gap: 16px;
+}
+
+.tutorBox {
+  overflow: hidden;
+  width: 100%;
+}
+.stdBox {
+  width: 100%;
+  overflow: hidden;
+}

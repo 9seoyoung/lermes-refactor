@@ -1,0 +1,146 @@
+@charset "utf-8";
+
+.whole {
+    margin-left: 20px; /* 왼쪽에 20px 공간을 둡니다 */
+}
+
+.breadcrumb {
+    margin-bottom: 5px; /* 간격 조정을 위한 여백 줄이기 */
+}
+
+h2.kc-consult-list-title {
+    font-size: 24px; /* 글씨 크기를 약간 키워서 강조 */
+    font-weight: bold; /* 두꺼운 글씨로 강조 */
+    color: #333; /* 텍스트 색상을 약간 어두운 회색으로 설정 */
+    //border-bottom: 2px solid #4285f4; /* 하단에 파란색 밑줄을 추가 */
+    padding-bottom: 8px; /* 밑줄과 텍스트 사이의 간격 */
+    margin-top: 5px; /* 제목과 breadcrumb 사이 간격 줄이기 */
+    margin-bottom: 10px; /* 하단 여백을 추가해 다른 요소들과의 간격을 확보 */
+    display: inline-block; /* 텍스트 아래의 밑줄이 텍스트 길이만큼만 표시되도록 설정 */
+}
+
+#menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    max-width: 1000px; /* 메뉴의 최대 넓이를 제한 */
+}
+
+#menu-navi {
+    display: flex;
+    align-items: center; /* 수직 정렬 */
+}
+
+#calendar {
+    flex: 1;
+    min-width: 600px; /* 캘린더의 최소 넓이를 지정하여 "오늘의 할 일"을 침범하지 않도록 */
+    border-right: 1px solid #ddd; /* 캘린더와 할 일 사이에 선을 추가 */
+    padding-right: 10px; /* 선과 캘린더 내용 사이에 여백을 줄임 */
+}
+
+.calendar-button {
+    margin-right: 8px; /* 버튼 간격 */
+    background-color: #f1f3f4; /* 버튼 배경색 */
+    border: none; /* 테두리 제거 */
+    padding: 6px 12px; /* 버튼 안쪽 여백 */
+    border-radius: 4px; /* 둥근 모서리 */
+    cursor: pointer;
+    font-size: 14px;
+    color: #202124;
+}
+
+.calendar-button:hover {
+    background-color: #e8eaed; /* 호버 시 배경색 */
+}
+
+.render-range {
+    font-size: 16px;
+    font-weight: bold;
+    color: #202124; /* 날짜 색상 */
+    margin-left: 10px; /* 날짜와 버튼 사이 간격 */
+}
+
+#view-modes {
+    display: flex;
+    gap: 8px;
+    position: relative;
+    right: -105px; /* 원하는 만큼 오른쪽으로 조정 (값을 조정해 원하는 위치를 찾으세요) */
+}
+
+#view-modes button {
+    background-color: #f1f3f4; /* 보기 모드 버튼 배경색 */
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #202124;
+}
+
+#view-modes button.active {
+    background-color: #4285f4;
+    color: white;
+}
+
+#today-date {
+    font-weight: bold; /* 글씨를 더 진하게 */
+    color: #333; /* 텍스트 색상을 어두운 회색으로 설정 */
+}
+
+.todo-title, .todo-location, .todo-time, .todo-type-text {
+    font-weight: bold; /* 글씨를 더 진하게 */
+    color: black;
+}
+
+.calendar-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px; /* 캘린더와 "오늘의 할 일" 사이의 간격을 줄임 */
+}
+#todo-list {
+    width: 30%;
+    margin-left: 1%; /* "오늘의 할 일"을 오른쪽으로 조금 더 이동 */
+}
+
+#todo-list h3 {
+    font-weight: bold; /* 또는 700, 800 등 원하는 굵기로 변경 */
+    font-size: 20px; /* 글씨 크기도 조정할 수 있습니다 */
+    color: #333; /* 색상도 필요에 따라 조정 */
+}
+
+.todo-item {
+    margin-bottom: 20px; /* 각 할 일 항목 사이의 간격 조정 */
+}
+
+.todo-complete {
+    margin-top: 10px; /* 완료 버튼과 시간 사이의 간격 조정 */
+    font-weight: bold;
+    color: black;
+}
+
+.todo-time {
+    display: block; /* 시간 부분을 블록 요소로 변경해 아래로 떨어지게 설정 */
+    margin-top: 10px; /* 시간 부분과 완료 버튼 사이의 간격 조정 */
+}
+
+.todo-completed .todo-title {
+    text-decoration: line-through;
+    color: gray;
+}
+
+.todo-completed .todo-time {
+    color: gray;
+}
+
+.todo-completed .todo-location {
+    color: gray;
+}
+
+.todo-completed .todo-type-text {
+    color: gray;
+}
+
+ul {
+    color: black; /* 기본적으로 ul의 텍스트와 점에 블랙 색상을 적용 */
+}

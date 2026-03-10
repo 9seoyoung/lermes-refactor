@@ -1,0 +1,40 @@
+.sched {
+  height: 100%;
+  width: 100%;
+  background-color: var(--bg-color-gray5);
+  border-radius: 16px;
+  padding: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.schedDateBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.schedDate {
+width: 380px;
+height: 35px;
+/* background-color: var(--color-sec-bg); */
+color: var(--color-text-main);
+border-radius: 4px;
+padding: 6px 5px;
+font-size: 14px;
+}
+
+.schedList {
+  list-style-type: disc;
+  /* height: 120px; */
+  padding-left: 24px;
+  flex: 1;
+  overflow-y: scroll;
+}
+
+.schedList li {
+  list-style-type: square;
+  color: var(--font-color-base);
+  font-size: 1.4rem;
+}

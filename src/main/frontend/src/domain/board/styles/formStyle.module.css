@@ -1,0 +1,31 @@
+.formAreaRow {
+  display: grid;
+  grid-template-columns: 1fr 12px 0px;   /* 기본은 옵션 영역 0 */
+  gap: 12px;
+
+  transition: grid-template-columns 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  align-items: stretch;
+}
+
+.formAreaRow.openOpt {
+  grid-template-columns: 1fr 12px 300px; /* 열리면 옵션 영역 300 */
+}
+
+.postOptWrap {
+  overflow: hidden;          /* 폭이 0일 때 내용 숨김 */
+}
+
+.postOpt {
+  height: 100%;
+  background: var(--color-light-bg);
+  border-radius: 8px;
+  padding: 16px 12px;
+
+  /* (선택) 내용만 살짝 부드럽게 */
+  opacity: 0;
+  transition: opacity 180ms ease-out;
+}
+
+.openOpt .postOpt {
+  opacity: 1;
+}
