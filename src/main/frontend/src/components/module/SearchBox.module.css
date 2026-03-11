@@ -1,4 +1,5 @@
 .searchBox {
+  position: relative;
   width: 640px;
   height: 48px;
   padding: 0 20px;
@@ -57,4 +58,27 @@ input[type="search"]::-webkit-search-cancel-button {
   background: white;
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+/* 파티클 */
+.particle {
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+  background: #ffffff;
+  opacity: 0.65;
+  transform: translate(-50%, -50%);
+  animation: cursorDust 750ms ease-out forwards;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.45);
+}
+
+@keyframes cursorDust {
+  0% {
+    opacity: 0.45;
+    transform: translate(-50%, -50%) translate(0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate(var(--dx), var(--dy)) scale(0.4);
+  }
 }
