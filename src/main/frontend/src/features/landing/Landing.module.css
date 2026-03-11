@@ -1,0 +1,14 @@
+.frame {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: repeat(4, auto);
+  gap: 32px;
+  width: 100%;
+}
+
+.frame .header {
+  background-color: white;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}

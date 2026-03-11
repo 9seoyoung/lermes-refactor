@@ -65,7 +65,7 @@ import { routePath } from './routeAddress.js';
 import GridLayout from './layouts/GridLayout.jsx';
 import TenantSettingLayout from './layouts/TenantSettingLayout.jsx';
 import BizHongBo from "../pages/Super/BizHongBo";
-import Landing from './layouts/Landing.jsx';
+import Landing from '../features/landing/Landing.jsx';
 
 function AppRoutes() {
   return (
