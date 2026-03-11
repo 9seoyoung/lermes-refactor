@@ -12,6 +12,7 @@ import Layout2 from '../components/layout/Real/Layout2.jsx';
 import GridLayout from './layouts/GridLayout.jsx';
 import TenantSettingLayout from './layouts/TenantSettingLayout.jsx';
 import SuperMain from '../pages/Super/SuperMain.jsx';
+import Landing from './layouts/Landing.jsx';
 
 function AppRoutes() {
   return (

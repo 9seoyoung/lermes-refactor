@@ -1,7 +1,12 @@
+.header_R {
+  color: red;
+}
+
 .menuContainer {
   display: flex;
   align-items: center;
   gap: 24px;
+  /* height: 100%; */
 }
 
 .subMenuList {

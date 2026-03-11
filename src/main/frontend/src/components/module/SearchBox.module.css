@@ -1,0 +1,60 @@
+.searchBox {
+  width: 640px;
+  height: 48px;
+  padding: 0 20px;
+  border: 1px solid #ddd;
+  border-radius: 48px;
+  background: white;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  transition: all 0.2s ease;
+}
+.searchBox:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+}
+
+.searchBox:focus-within {
+  transform: scale(1.01);
+}
+.searchIcon {
+  stroke: #8a8a8a;
+  transition: stroke 0.2s;
+}
+
+.searchBox:focus-within .searchIcon {
+  stroke: #1a73e8;
+  scale: 1.1;
+}
+
+.searchBar {
+  flex: 1;
+  height: 100%;
+
+  border: none;
+  outline: none;
+
+  font-size: 16px;
+}
+
+input::placeholder {
+  transition: opacity 0.2s;
+}
+
+input:focus::placeholder {
+  opacity: 0.5;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+.listBox {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}

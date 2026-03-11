@@ -65,6 +65,7 @@ import { routePath } from './routeAddress.js';
 import GridLayout from './layouts/GridLayout.jsx';
 import TenantSettingLayout from './layouts/TenantSettingLayout.jsx';
 import BizHongBo from "../pages/Super/BizHongBo";
+import Landing from './layouts/Landing.jsx';
 
 function AppRoutes() {
   return (
@@ -84,6 +85,7 @@ function AppRoutes() {
       <Route path='/testBoardDTO' element={<BasicPost />} />
       <Route path="/files" element={<UploadDownloadDemo />} />
       <Route path='/testLayout' element={<GridLayout />} />
+      <Route path='/landing' element={<Landing />} />
 
       {/* 에러페이지 */}
       <Route path="/403" element={<NotAllowed />} />
